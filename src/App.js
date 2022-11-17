@@ -1,7 +1,13 @@
-function App() {
+import { AppHeader } from './cmps/AppHeader'
+import { TinyUrlApp } from './pages/TinyUrlApp'
+
+export const App = () => {
   return (
     <div className="App">
-      <header className="app-header">Header</header>
+      <AppHeader />
+      <main className="container ">
+        <TinyUrlApp />
+      </main>
     </div>
   )
 }
