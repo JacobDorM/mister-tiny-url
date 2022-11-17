@@ -1,22 +1,24 @@
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from '../customHooks/useForm'
 import { utilService } from '../services/utilService.js'
-import { useSelector, useDispatch } from 'react-redux'
 import { saveUrl } from '../store/actions/urlActions'
-import { useEffect } from 'react'
-import { loadUrls, setUrl } from '../store/actions/urlActions'
+import { loadUrls, loadUrl, setUrl } from '../store/actions/urlActions'
 
 export const TinyUrlApp = () => {
   const { url } = useSelector((state) => state.urlModule)
 
   const dispatch = useDispatch()
+  const params = useParams()
 
-  const [localUrl, handleChange, setLocalUrl] = useForm({ longUrl: '' }, () => {
-    console.log(localUrl)
-  })
+  const [localUrl, handleChange, setLocalUrl] = useForm({ longUrl: '' }, () => {})
 
   useEffect(() => {
-    dispatch(loadUrls())
-  }, [dispatch])
+    if (params.id) {
+      url ? window.location.replace(url.longUrl) : dispatch(loadUrl(params.id))
+    } else dispatch(loadUrls())
+  }, [params.id, url, dispatch])
 
   const onSubmit = (e) => {
     e.preventDefault()

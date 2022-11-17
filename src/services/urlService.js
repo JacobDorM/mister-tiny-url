@@ -4,6 +4,7 @@ import { utilService } from './utilService.js'
 export const urlService = {
   query,
   getById,
+  getByPointer,
   remove,
   save,
   getEmpty,
@@ -21,13 +22,17 @@ function getById(id) {
   return storageService.get(URLS_KEY, id)
 }
 
+function getByPointer(pointer) {
+  return storageService.getByPointer(URLS_KEY, pointer)
+}
+
 function remove(id) {
   return storageService.remove(URLS_KEY, id)
 }
 
 function save(url) {
   url.pointer = utilService.makeId()
-  url.shortUrl = `http://localhost:3000/${url.pointer}`
+  url.shortUrl = `http://localhost:3000/#/tinyurl/${url.pointer}`
   return storageService.post(URLS_KEY, url)
 }
 

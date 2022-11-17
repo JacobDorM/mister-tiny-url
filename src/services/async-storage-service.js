@@ -3,6 +3,7 @@ import { utilService } from './utilService'
 export const storageService = {
   query,
   get,
+  getByPointer,
   post,
   put,
   remove,
@@ -19,6 +20,11 @@ async function query(entityType) {
 async function get(entityType, entityId) {
   const entities = await query(entityType)
   return entities.find((entity) => entity._id === entityId)
+}
+
+async function getByPointer(entityType, entityPointer) {
+  const entities = await query(entityType)
+  return entities.find((entity) => entity.pointer === entityPointer)
 }
 
 //create new item
