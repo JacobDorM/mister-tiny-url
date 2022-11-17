@@ -1,10 +1,9 @@
 import { urlService } from '../../services/urlService'
 
-export function loadContacts() {
-  return async (dispatch, getState) => {
+export function loadUrls() {
+  return async (dispatch) => {
     try {
-      const { filterBy } = getState().urlModule
-      const urls = await urlService.query(filterBy)
+      const urls = await urlService.query()
       dispatch({ type: 'SET_URLS', urls })
     } catch (err) {
       console.log('err:', err)
@@ -12,19 +11,8 @@ export function loadContacts() {
   }
 }
 
-export function loadContact(urlId) {
-  return async (dispatch, getState) => {
-    try {
-      const url = urlId ? await urlService.getById(urlId) : await urlService.getEmpty()
-      dispatch({ type: 'SET_URL', url })
-    } catch (err) {
-      console.log('err:', err)
-    }
-  }
-}
-
-export function setContact(url) {
-  return async (dispatch, getState) => {
+export function setUrl(url) {
+  return async (dispatch) => {
     try {
       dispatch({ type: 'SET_URL', url })
     } catch (err) {
@@ -33,8 +21,8 @@ export function setContact(url) {
   }
 }
 
-export function removeContact(urlId) {
-  return async (dispatch, getState) => {
+export function removeUrl(urlId) {
+  return async (dispatch) => {
     try {
       const url = await urlService.remove(urlId)
       dispatch({ type: 'REMOVE_URL', urlId })
@@ -45,19 +33,15 @@ export function removeContact(urlId) {
   }
 }
 
-export function saveContact(url) {
-  return async (dispatch, getState) => {
+export function saveUrl(url) {
+  return async (dispatch) => {
     try {
-      const savedContact = await urlService.save({ ...url })
-      url._id ? dispatch({ type: 'UPDATE_URL', savedContact }) : dispatch({ type: 'ADD_URL', savedContact })
+      const savedUrl = await urlService.save({ ...url })
+      url = savedUrl
+      dispatch({ type: 'ADD_URL', savedUrl })
+      dispatch({ type: 'SET_URL', url })
     } catch (err) {
       console.log('err:', err)
     }
-  }
-}
-
-export function setFilterBy(filterBy) {
-  return (dispatch) => {
-    dispatch({ type: 'SET_FILTER_BY', filterBy })
   }
 }

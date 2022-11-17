@@ -1,4 +1,5 @@
 import { storageService } from './async-storage-service.js'
+import { utilService } from './utilService.js'
 
 export const urlService = {
   query,
@@ -25,8 +26,9 @@ function remove(id) {
 }
 
 function save(url) {
-  if (url._id) return storageService.put(URLS_KEY, url)
-  else return storageService.post(URLS_KEY, url)
+  url.pointer = utilService.makeId()
+  url.shortUrl = `http://localhost:3000/${url.pointer}`
+  return storageService.post(URLS_KEY, url)
 }
 
 async function getEmpty() {
