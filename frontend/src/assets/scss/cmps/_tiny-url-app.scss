@@ -1,0 +1,35 @@
+.tinyUrl-app {
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-top: 1.5rem;
+}
+.view {
+  max-width: 1400px;
+
+  .view-right {
+    height: 600px;
+    width: 300px;
+  }
+}
+
+.view-container {
+  align-self: flex-start;
+  color: #fff;
+
+  .view-card {
+    border-radius: 10px;
+    box-shadow: 0 2px 3px rgb(0 0 0 / 16%);
+    color: #343a40;
+    margin-bottom: 0;
+    background-color: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    min-width: 0;
+    position: relative;
+
+    .card-body {
+      padding: 1rem;
+      flex: 1 1 auto;
+      min-height: 1px;
+    }
+  }
+}

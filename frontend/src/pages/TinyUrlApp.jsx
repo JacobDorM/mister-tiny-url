@@ -40,9 +40,24 @@ export const TinyUrlApp = () => {
 
   return (
     <div className="tinyUrl-app">
-      <form onSubmit={onSubmit} className="tinyUrl-form">
-        {url && url.pointer ? <ResultInput url={url} /> : <LongUrlInput localUrl={localUrl} onChange={handleChange} />}
-      </form>
+      <div className="view">
+        <div className="view-top flex space-between">
+          <div className="view-left">
+            <div className="view-box flex row">
+              <div className="view-container">
+                <div className="view-card flex column">
+                  <div className="card-body">
+                    <form onSubmit={onSubmit} className="tinyUrl-form">
+                      {url && url.pointer ? <ResultInput url={url} /> : <LongUrlInput localUrl={localUrl} onChange={handleChange} />}
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="view-right"></div>
+        </div>
+      </div>
     </div>
   )
 }

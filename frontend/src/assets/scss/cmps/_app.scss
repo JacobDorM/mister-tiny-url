@@ -1,0 +1,23 @@
+.background-img {
+  background: linear-gradient(180deg, #002342, #0bc9e3 132.49%);
+  background-attachment: fixed;
+  background-color: #002342;
+  background-size: cover;
+  bottom: 0;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: -1;
+
+  .background-img-bottom {
+    background-position: 100% 100%;
+    bottom: 0;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    width: 100vw;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+}

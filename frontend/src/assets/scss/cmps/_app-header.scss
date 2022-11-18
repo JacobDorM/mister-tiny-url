@@ -1,3 +1,15 @@
 .app-header {
-  background-color: rgb(41, 38, 38);
+  // background-color: rgb(41, 38, 38);
+  padding: 1rem 3rem 1rem 3rem;
+}
+
+.nav-logo {
+  color: #fff;
+  font-family: Bungee, Impact, sans-serif;
+  font-size: 46px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 120.5%;
+  text-transform: uppercase;
+  text-shadow: 0 4px 15px rgb(0 0 0 / 20%);
 }
