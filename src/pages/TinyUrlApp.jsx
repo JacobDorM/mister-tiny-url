@@ -3,8 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from '../customHooks/useForm'
 import { utilService } from '../services/utilService.js'
-import { saveUrl } from '../store/actions/urlActions'
-import { loadUrls, loadUrl, setUrl } from '../store/actions/urlActions'
+import { loadUrl, setUrl, saveUrl } from '../store/actions/urlActions'
 import { LongUrlInput } from '../cmps/LongUrlInput'
 import { ResultInput } from '../cmps/ResultInput'
 
@@ -28,7 +27,7 @@ export const TinyUrlApp = () => {
           navigate('/tinyurl')
         }
       } else dispatch(loadUrl(params.id))
-    } else dispatch(loadUrls())
+    }
   }, [params.id, url, dispatch, navigate, setLocalUrl])
 
   const onSubmit = (e) => {
