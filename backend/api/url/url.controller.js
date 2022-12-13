@@ -1,5 +1,18 @@
 const logger = require('../../services/logger.service')
+const utilService = require('../../services/util.service.js')
 const urlService = require('./url.service')
+
+class Url {
+  constructor(pointer, shortUrl, longUrl) {
+    this.pointer = pointer
+    this.shortUrl = shortUrl
+    this.longUrl = longUrl
+  }
+
+  printIt() {
+    console.log('print It')
+  }
+}
 
 async function getUrls(req, res) {
   try {
@@ -23,9 +36,12 @@ async function getUrl(req, res) {
 
 async function addUrl(req, res) {
   try {
-    let url = req.body
+    const pointer = utilService.makeId()
+    let url = new Url(pointer, `http://localhost:3000/#/tinyurl/${pointer}`, req.body.longUrl)
     url = await urlService.add(url)
-    res.send(url)
+    console.log(url)
+
+    res.json(url)
   } catch (err) {
     logger.error('Failed to add url', err)
     res.status(500).send({ err: 'Failed to add url' })
