@@ -3,6 +3,12 @@ import thunk from 'redux-thunk'
 
 import { urlReducer } from './reducers/urlReducer'
 
+// declare global {
+//   interface Window {
+//     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
+//   }
+// }
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const rootReducer = combineReducers({
