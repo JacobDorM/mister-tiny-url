@@ -39,8 +39,6 @@ async function addUrl(req, res) {
     const pointer = utilService.makeId()
     let url = new Url(pointer, `http://localhost:3000/#/tinyurl/${pointer}`, req.body.longUrl)
     url = await urlService.add(url)
-    console.log(url)
-
     res.json(url)
   } catch (err) {
     logger.error('Failed to add url', err)
