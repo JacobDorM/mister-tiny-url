@@ -1,9 +1,16 @@
+import { Dispatch } from 'redux'
 import { urlService } from '../../services/urlService'
 
-export function loadUrl(urlPointer) {
-  return async (dispatch) => {
+interface Url {
+  pointer?: string
+  shortUrl?: string
+  longUrl?: string
+}
+
+export function loadUrl(urlPointer: string) {
+  return async (dispatch: Dispatch) => {
     try {
-      const url = await urlService.getByPointer(urlPointer)
+      const url: Url = await urlService.getByPointer(urlPointer)
       dispatch({ type: 'SET_URL', url })
     } catch (err) {
       console.log('err:', err)
@@ -11,8 +18,8 @@ export function loadUrl(urlPointer) {
   }
 }
 
-export function setUrl(url) {
-  return async (dispatch) => {
+export function setUrl(url: Url | null) {
+  return async (dispatch: Dispatch) => {
     try {
       dispatch({ type: 'SET_URL', url })
     } catch (err) {
@@ -21,8 +28,8 @@ export function setUrl(url) {
   }
 }
 
-export function saveUrl(url) {
-  return async (dispatch) => {
+export function saveUrl(url: Url) {
+  return async (dispatch: Dispatch) => {
     try {
       url = await urlService.save({ ...url })
       dispatch({ type: 'SET_URL', url })

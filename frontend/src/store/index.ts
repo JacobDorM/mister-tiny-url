@@ -1,19 +1,14 @@
-import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from 'redux'
-import thunk from 'redux-thunk'
-
+import { combineReducers } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
 import { urlReducer } from './reducers/urlReducer'
-
-// declare global {
-//   interface Window {
-//     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
-//   }
-// }
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const rootReducer = combineReducers({
   urlModule: urlReducer,
 })
 
-export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
+export const store = configureStore({ reducer: rootReducer })
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+
 window.gStore = store

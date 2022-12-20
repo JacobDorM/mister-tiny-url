@@ -1,6 +1,12 @@
 // what type should you give to null
+interface Url {
+  pointer?: string
+  shortUrl?: string
+  longUrl?: string
+}
+
 interface UrlState {
-  url: null
+  url: null | Url
 }
 
 const INITIAL_STATE: UrlState = {
@@ -25,7 +31,7 @@ interface urlGet {
 
 type IAction = urlSet | urlGet
 
-export function urlReducer(state = INITIAL_STATE, action: IAction) {
+export function urlReducer(state = INITIAL_STATE, action: IAction): UrlState {
   switch (action.type) {
     case ActionTypes.SET_URL:
       return {

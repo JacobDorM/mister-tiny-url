@@ -1,25 +1,29 @@
 import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../hooks'
 import { useForm } from '../customHooks/useForm'
-import { utilService } from '../services/utilService.js'
+import { utilService } from '../services/utilService'
 import { loadUrl, setUrl, saveUrl } from '../store/actions/urlActions'
 import { LongUrlInput } from '../cmps/LongUrlInput'
 import { ResultInput } from '../cmps/ResultInput'
 
 export const TinyUrlApp = () => {
-  const { url } = useSelector((state) => state.urlModule)
+  const { url } = useAppSelector((state) => state.urlModule)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const params = useParams()
   const navigate = useNavigate()
+
+  interface MyUrl {
+    longUrl: string
+  }
 
   const [localUrl, handleChange, setLocalUrl] = useForm({ longUrl: '' }, () => {})
 
   useEffect(() => {
     if (params.id) {
       if (url) {
-        if (url.pointer === params.id) {
+        if (url.pointer === params.id && url.longUrl) {
           window.location.replace(url.longUrl)
         } else {
           setLocalUrl({ longUrl: '' })
@@ -30,7 +34,7 @@ export const TinyUrlApp = () => {
     }
   }, [params.id, url, dispatch, navigate, setLocalUrl])
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (url) {
       setLocalUrl({ longUrl: '' })

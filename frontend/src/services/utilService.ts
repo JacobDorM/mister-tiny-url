@@ -3,10 +3,10 @@ export const utilService = {
   makeId,
 }
 
-function isValidHttpUrl(string) {
+function isValidHttpUrl(str: string) {
   let url
   try {
-    url = new URL(string)
+    url = new URL(str)
   } catch (_) {
     return false
   }

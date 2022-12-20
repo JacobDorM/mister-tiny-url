@@ -5,10 +5,16 @@ export const urlService = {
   save,
 }
 
-async function getByPointer(pointer) {
+interface Url {
+  pointer?: string
+  shortUrl?: string
+  longUrl?: string
+}
+
+async function getByPointer(pointer: string) {
   return await httpService.get(`url/${pointer}`)
 }
 
-function save(url) {
+function save(url: Url) {
   return httpService.post('url', url)
 }

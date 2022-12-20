@@ -1,4 +1,14 @@
-export const ResultInput = ({ url }) => {
+interface Url {
+  pointer?: string
+  shortUrl?: string
+  longUrl?: string
+}
+
+type ResultInputProps = {
+  url: Url
+}
+
+export const ResultInput: React.FunctionComponent<ResultInputProps> = ({ url }) => {
   return (
     <div>
       <div className="form-group">

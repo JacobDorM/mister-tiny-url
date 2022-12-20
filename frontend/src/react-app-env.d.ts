@@ -10,4 +10,11 @@ declare global {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
     gStore
   }
+  //  how to extend Error without any
+  interface Error {
+    code?: string
+    config?: object
+    request?: object
+    response: any
+  }
 }
