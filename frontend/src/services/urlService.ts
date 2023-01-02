@@ -1,14 +1,8 @@
 import { httpService } from './http.service'
-
+import { Url } from '../models/url.model'
 export const urlService = {
   getByPointer,
   save,
-}
-
-interface Url {
-  pointer?: string
-  shortUrl?: string
-  longUrl?: string
 }
 
 async function getByPointer(pointer: string) {

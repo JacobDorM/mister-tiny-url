@@ -14,10 +14,6 @@ export const TinyUrlApp = () => {
   const params = useParams()
   const navigate = useNavigate()
 
-  interface MyUrl {
-    longUrl: string
-  }
-
   const [localUrl, handleChange, setLocalUrl] = useForm({ longUrl: '' }, () => {})
 
   useEffect(() => {

@@ -1,11 +1,6 @@
 import { Dispatch } from 'redux'
 import { urlService } from '../../services/urlService'
-
-interface Url {
-  pointer?: string
-  shortUrl?: string
-  longUrl?: string
-}
+import { Url } from '../../models/url.model'
 
 export function loadUrl(urlPointer: string) {
   return async (dispatch: Dispatch) => {

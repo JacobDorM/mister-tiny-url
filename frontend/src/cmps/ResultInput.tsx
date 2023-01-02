@@ -1,8 +1,4 @@
-interface Url {
-  pointer?: string
-  shortUrl?: string
-  longUrl?: string
-}
+import { Url } from '../models/url.model'
 
 type ResultInputProps = {
   url: Url
