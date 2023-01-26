@@ -1,0 +1,71 @@
+.pop {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 14;
+}
+
+.closePopOver {
+  padding: 9px 12px;
+}
+
+.btn-fs {
+  font-size: 0.9375rem;
+}
+
+.fa-lg {
+  font-size: 1.25em;
+  line-height: 0.05em;
+  vertical-align: -0.075em;
+}
+
+.fa-lg::before {
+  content: 'x';
+}
+
+.modal__head-logo {
+  color: #0980a1;
+  margin-bottom: 7px;
+  text-shadow: none;
+}
+
+.modal__head-txt {
+  color: #5e5e5e;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+.form-control {
+  background-clip: padding-box;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  color: #495057;
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  height: calc(1.5em + 0.75rem + 2px);
+  line-height: 1.5;
+  padding: 0.375rem 0.75rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  width: 100%;
+}
+
+.form-control-bold {
+  border-radius: 0.3rem;
+  color: #424242;
+  font-weight: 600;
+  height: calc(1.875em + 1rem + 2px);
+  line-height: 1.5;
+  padding: 0.5rem 1rem;
+}
+
+.form-error {
+  color: #c31818;
+  font-size: 12px;
+  font-weight: 500;
+}

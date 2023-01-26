@@ -5,3 +5,15 @@
 body {
   margin: 0;
 }
+
+a {
+  text-decoration: none;
+  transition: all 0.3s;
+  background-color: transparent;
+}
+
+input {
+  overflow: visible;
+  margin: 0;
+  font-family: inherit;
+}

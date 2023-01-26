@@ -8,20 +8,20 @@ export interface UrlState {
   url: null | Url
 }
 
-export enum ActionTypes {
+export enum UrlActionTypes {
   SET_URL = 'SET_URL',
   GET_URL = 'GET_URL',
 }
 
 // understand what type to give to url
-export interface urlSet {
-  type: ActionTypes.SET_URL
+interface urlSet {
+  type: UrlActionTypes.SET_URL
   url: object
 }
 
-export interface urlGet {
-  type: ActionTypes.GET_URL
+interface urlGet {
+  type: UrlActionTypes.GET_URL
   b: string
 }
 
-export type IAction = urlSet | urlGet
+export type UrlActions = urlSet | urlGet

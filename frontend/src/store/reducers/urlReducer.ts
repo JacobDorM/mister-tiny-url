@@ -1,13 +1,13 @@
 // what type should you give to null
-import { UrlState, IAction, ActionTypes } from '../../models/url.model'
+import { UrlState, UrlActions, UrlActionTypes } from '../../models'
 
 const INITIAL_STATE: UrlState = {
   url: null,
 }
 
-export function urlReducer(state = INITIAL_STATE, action: IAction): UrlState {
+export function urlReducer(state = INITIAL_STATE, action: UrlActions): UrlState {
   switch (action.type) {
-    case ActionTypes.SET_URL:
+    case UrlActionTypes.SET_URL:
       return {
         ...state,
         url: action.url,

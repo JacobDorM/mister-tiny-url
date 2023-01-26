@@ -1,7 +1,7 @@
 import { useEffectUpdate } from './useEffectUpdate'
 import { useState } from 'react'
 
-export const useForm = <T extends { [key: string]: any }>(initialState: T, cb: Function) => {
+export const useFormInput = <T extends { [key: string]: any }>(initialState: T, cb: Function) => {
   const [fields, setFields] = useState(initialState)
 
   useEffectUpdate(() => {
@@ -15,5 +15,14 @@ export const useForm = <T extends { [key: string]: any }>(initialState: T, cb: F
     setFields((prevFields) => ({ ...prevFields, [field]: value }))
   }
 
-  return [fields, handleChange, setFields] as const
+  const inputAtr = (field: string) => {
+    return {
+      onChange: handleChange,
+      name: field,
+      id: field,
+      value: fields[field],
+    }
+  }
+
+  return [inputAtr, fields, setFields] as const
 }

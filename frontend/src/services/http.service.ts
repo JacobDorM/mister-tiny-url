@@ -8,16 +8,16 @@ const axios = Axios.create({
 })
 
 export const httpService = {
-  get(endpoint: string, data?: null | object) {
+  get(endpoint: string, data?: object) {
     return ajax(endpoint, 'GET', data)
   },
-  post(endpoint: string, data?: null | object) {
+  post(endpoint: string, data?: object) {
     return ajax(endpoint, 'POST', data)
   },
-  put(endpoint: string, data?: null | object) {
+  put(endpoint: string, data: object) {
     return ajax(endpoint, 'PUT', data)
   },
-  delete(endpoint: string, data?: null | object) {
+  delete(endpoint: string, data: object) {
     return ajax(endpoint, 'DELETE', data)
   },
 }

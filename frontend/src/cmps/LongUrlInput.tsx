@@ -4,8 +4,9 @@ type LongUrlInputProps = {
     [key: string]: any
   }
 }
-
-export const LongUrlInput: React.FunctionComponent<LongUrlInputProps> = ({ localUrl, onChange }) => {
+// FunctionComponent<LongUrlInputProps>
+// React.FC<LongUrlInputProps>
+export const LongUrlInput: React.FC<LongUrlInputProps> = ({ localUrl, onChange }) => {
   return (
     <div className="form-group">
       <label htmlFor="longUrl" className="label-fancy">

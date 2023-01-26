@@ -1,8 +1,11 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { AppHeader } from './cmps/AppHeader'
 import { TinyUrlApp } from './pages/TinyUrlApp'
+import { Login } from './cmps/Login'
+import { Logout } from './cmps/Logout'
+import { Register } from './cmps/Register'
 
-export const App = () => {
+export const App: React.FC<{}> = () => {
   return (
     <div>
       <div className="App">
@@ -10,11 +13,17 @@ export const App = () => {
         <main className="container ">
           <Routes>
             <Route path="/tinyurl/:id" element={<TinyUrlApp />} />
-            <Route path="/tinyurl" element={<TinyUrlApp />} />
+            <Route path="/tinyurl" element={<TinyUrlApp />}>
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="logout" element={<Logout />} />
+            </Route>
             <Route path="/" element={<Navigate to="/tinyurl" />} />
           </Routes>
         </main>
       </div>
+      {/* add here the section login */}
+      {/* <Route path="/login" element={<Login />} /> */}
       <div className="background-img">
         <svg width="576" height="657" viewBox="0 0 576 657" fill="none" xmlns="http://www.w3.org/2000/svg" className="background-img-bottom">
           <path fillRule="evenodd" clipRule="evenodd" d="M119.005 490.408C104.348 426.309 103.735 359.939 126.098 298.105C146.88 240.642 190.23 196.348 238.776 159.237C285.339 123.642 339.92 107.296 396.362 91.4996C468.695 71.2562 553.312 8.95396 613.046 54.4918C674.494 101.336 634.107 201.896 641.998 278.759C647.244 329.854 654.826 377.525 651.472 428.779C647.298 492.553 668.578 571.511 620.111 613.172C571.712 654.774 496.031 604.218 433.356 616.263C356.216 631.089 288.829 720.051 215.905 690.855C145.28 662.579 135.963 564.569 119.005 490.408Z" fill="url(#paint0_linear)" fillOpacity="0.3"></path>{' '}

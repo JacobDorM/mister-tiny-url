@@ -1,20 +1,28 @@
 import { useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useAppSelector, useAppDispatch } from '../hooks'
-import { useForm } from '../customHooks/useForm'
+import { useParams, useNavigate, Outlet } from 'react-router-dom'
+import { useAppSelector, useAppDispatch, useForm, useFormInput } from '../customHooks'
 import { utilService } from '../services/utilService'
 import { loadUrl, setUrl, saveUrl } from '../store/actions/urlActions'
+// import { getLoggedinUserAfterAppClosed } from '../store/actions/authActions'
 import { LongUrlInput } from '../cmps/LongUrlInput'
 import { ResultInput } from '../cmps/ResultInput'
 
-export const TinyUrlApp = () => {
+export const TinyUrlApp: React.FC<{}> = () => {
   const { url } = useAppSelector((state) => state.urlModule)
+  // const { loggedinUser } = useAppSelector((state) => state.authModule)
 
   const dispatch = useAppDispatch()
   const params = useParams()
   const navigate = useNavigate()
 
   const [localUrl, handleChange, setLocalUrl] = useForm({ longUrl: '' }, () => {})
+  const [authInputAtr, userCred, setUserCred] = useFormInput({ name: '', email: '', password: '' }, () => {})
+
+  const outletProps = {
+    authInputAtr,
+    userCred,
+    setUserCred,
+  }
 
   useEffect(() => {
     if (params.id) {
@@ -29,6 +37,10 @@ export const TinyUrlApp = () => {
       } else dispatch(loadUrl(params.id))
     }
   }, [params.id, url, dispatch, navigate, setLocalUrl])
+
+  // useEffect(() => {
+  //   dispatch(getLoggedinUserAfterAppClosed())
+  // }, [dispatch])
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -58,6 +70,7 @@ export const TinyUrlApp = () => {
           <div className="view-right"></div>
         </div>
       </div>
+      <Outlet context={outletProps} />
     </div>
   )
 }

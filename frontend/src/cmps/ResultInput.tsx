@@ -1,10 +1,10 @@
-import { Url } from '../models/url.model'
+import { Url } from '../models'
 
 type ResultInputProps = {
   url: Url
 }
 
-export const ResultInput: React.FunctionComponent<ResultInputProps> = ({ url }) => {
+export const ResultInput: React.FC<ResultInputProps> = ({ url }) => {
   return (
     <div>
       <div className="form-group">
