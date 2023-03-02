@@ -1,27 +1,25 @@
+import { Msg } from '.'
+
 export interface UserCred {
+  _id?: string
   name?: string
   email: string
   password: string
+  msgs: Msg[] | []
 }
 
-interface LoggedinUser {
-  name?: string
-  email: string
-  password?: string
+export interface UsersState {
+  users: null | UserCred[]
 }
 
-export interface UserState {
-  loggedinUser: null | LoggedinUser
-}
-
-export enum UserActionTypes {
-  SET_LOGGEDIN_USER = 'SET_LOGGEDIN_USER',
+export enum UsersActionTypes {
+  SET_USERS = 'SET_USERS',
 }
 
 // export type UserAction = UserCred
-interface SetLoogedinUserAction {
-  type: UserActionTypes.SET_LOGGEDIN_USER
-  user: LoggedinUser
+interface SetUsersAction {
+  type: UsersActionTypes.SET_USERS
+  users: UserCred[]
 }
 
-export type UserActions = SetLoogedinUserAction
+export type UsersActions = SetUsersAction

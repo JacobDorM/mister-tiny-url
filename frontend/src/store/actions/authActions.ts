@@ -33,14 +33,3 @@ export function logout() {
     }
   }
 }
-
-export function getLoggedinUserAfterAppClosed() {
-  return async (dispatch: Dispatch) => {
-    try {
-      const user = await authService.getLoggedinUserAfterAppClosed()
-      dispatch({ type: 'SET_LOGGEDIN_USER', user })
-    } catch (err) {
-      console.log(`couldn't signup: ${err}`)
-    }
-  }
-}

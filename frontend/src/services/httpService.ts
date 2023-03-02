@@ -1,31 +1,40 @@
-import Axios from 'axios'
+import Axios, { AxiosRequestConfig } from 'axios'
 // import { router } from '@/router'
 
 const BASE_URL = process.env.NODE_ENV === 'production' ? '/api/' : '//localhost:3030/api/'
 
-const axios = Axios.create({
+const axiosConfig: Readonly<AxiosRequestConfig> = {
+  baseURL: BASE_URL,
   withCredentials: true,
-})
+}
+const axios = Axios.create(axiosConfig)
 
-export const httpService = {
-  get(endpoint: string, data?: object) {
+interface HttpService {
+  get<T>(endpoint: string, data?: Record<string, any>): Promise<T>
+  post<T>(endpoint: string, data?: Record<string, any>): Promise<T>
+  put<T>(endpoint: string, data?: Record<string, any>): Promise<T>
+  delete<T>(endpoint: string, data?: Record<string, any>): Promise<T>
+}
+
+export const httpService: HttpService = {
+  get(endpoint, data) {
     return ajax(endpoint, 'GET', data)
   },
-  post(endpoint: string, data?: object) {
+  post(endpoint, data) {
     return ajax(endpoint, 'POST', data)
   },
-  put(endpoint: string, data: object) {
+  put(endpoint, data) {
     return ajax(endpoint, 'PUT', data)
   },
-  delete(endpoint: string, data: object) {
+  delete(endpoint, data) {
     return ajax(endpoint, 'DELETE', data)
   },
 }
 
-async function ajax(endpoint: string, method = 'GET', data: object | null = null) {
+async function ajax<T>(endpoint: string, method = 'GET', data: Record<string, unknown> | null = null): Promise<T> {
   try {
     const res = await axios({
-      url: `${BASE_URL}${endpoint}`,
+      url: endpoint,
       method,
       data,
       params: method === 'GET' ? data : null,

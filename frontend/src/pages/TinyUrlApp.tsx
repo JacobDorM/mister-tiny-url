@@ -3,20 +3,18 @@ import { useParams, useNavigate, Outlet } from 'react-router-dom'
 import { useAppSelector, useAppDispatch, useForm, useFormInput } from '../customHooks'
 import { utilService } from '../services/utilService'
 import { loadUrl, setUrl, saveUrl } from '../store/actions/urlActions'
-// import { getLoggedinUserAfterAppClosed } from '../store/actions/authActions'
 import { LongUrlInput } from '../cmps/LongUrlInput'
 import { ResultInput } from '../cmps/ResultInput'
 
 export const TinyUrlApp: React.FC<{}> = () => {
   const { url } = useAppSelector((state) => state.urlModule)
-  // const { loggedinUser } = useAppSelector((state) => state.authModule)
 
   const dispatch = useAppDispatch()
   const params = useParams()
   const navigate = useNavigate()
 
   const [localUrl, handleChange, setLocalUrl] = useForm({ longUrl: '' }, () => {})
-  const [authInputAtr, userCred, setUserCred] = useFormInput({ name: '', email: '', password: '' }, () => {})
+  const [authInputAtr, userCred, setUserCred] = useFormInput({ _id: '', name: '', email: '', password: '', msgs: [] }, () => {})
 
   const outletProps = {
     authInputAtr,
@@ -37,10 +35,6 @@ export const TinyUrlApp: React.FC<{}> = () => {
       } else dispatch(loadUrl(params.id))
     }
   }, [params.id, url, dispatch, navigate, setLocalUrl])
-
-  // useEffect(() => {
-  //   dispatch(getLoggedinUserAfterAppClosed())
-  // }, [dispatch])
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom'
-import { UserCred } from '../models'
+import { Msg, UserCred } from '../models'
 
 type AuthContextType = {
   userCred: UserCred
@@ -9,11 +9,14 @@ type AuthContextType = {
     id: string
     value: any
   }
+
   setUserCred: React.Dispatch<
     React.SetStateAction<{
+      _id?: string
       name?: string
       email: string
       password: string
+      msgs?: Msg[] | []
     }>
   >
 }

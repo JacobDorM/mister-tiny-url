@@ -1,9 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { signup } from '../store/actions/authActions'
-import { useAuth, useAppDispatch } from '../customHooks'
+import { login } from '../../store/actions/authActions'
+import { useAuth, useAppDispatch } from '../../customHooks'
 
-export const Register: React.FC = () => {
+export const Login: React.FC<{}> = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { authInputAtr, userCred, setUserCred } = useAuth()
@@ -14,9 +14,9 @@ export const Register: React.FC = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(signup(userCred))
+    dispatch(login(userCred))
     setUserCred({ name: '', email: '', password: '' })
-    navigate('/tinyurl/login')
+    navigate('/tinyurl')
   }
 
   return (
@@ -37,30 +37,23 @@ export const Register: React.FC = () => {
             </div>
             <form className="text-muted" onSubmit={onSubmit}>
               <div className="form-group">
-                <label htmlFor="name" className="label-fancy">
-                  Name
+                <label htmlFor="login_email" className="label-fancy">
+                  Email
                 </label>
-                <input {...authInputAtr('name')} type="text" className="form-control form-control-bold" autoComplete="username" />
-                <div role="alert" className="form-error mb-05r mt-05r"></div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="email" className="label-fancy">
-                  E-Mail Adress
-                </label>
-                <input {...authInputAtr('email')} type="text" className="form-control form-control-bold" autoComplete="email" />
+                <input {...authInputAtr('email')} type="text" className="form-control form-control-bold" />
                 <div role="alert" className="form-error mb-05r mt-05r"></div>
               </div>
               <div className="form-group">
                 <label htmlFor="password" className="label-fancy">
                   Password
                 </label>
-                <input {...authInputAtr('password')} type="password" className="form-control form-control-bold" autoComplete="new-password" />
+                <input {...authInputAtr('password')} type="password" autoComplete="current-password" className="form-control form-control-bold" />
                 <div role="alert" className="form-error mb-05r mt-05r"></div>
               </div>
               <div className="form-group">
                 <button type="submit" className="text-capitalize btn-login btn-block btn-t-blue">
                   <i className="link link-login"></i>
-                  <span className="pl-1r">Create an account</span>
+                  <span className="pl-1r">Sign in</span>
                 </button>
               </div>
             </form>

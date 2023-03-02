@@ -1,6 +1,20 @@
 export const utilService = {
   isValidHttpUrl,
   makeId,
+  debounce,
+}
+
+function debounce(func: Function, wait = 700) {
+  let timeout: ReturnType<typeof setTimeout>
+  return function (...args: []) {
+    const later = () => {
+      clearTimeout(timeout)
+      func(...args)
+    }
+
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+  }
 }
 
 function isValidHttpUrl(str: string) {

@@ -1,14 +1,17 @@
-import { httpService } from './http.service'
+import { httpService } from './httpService'
 import { Url } from '../models/url.model'
+
+const ENDPOINT = 'url'
+
 export const urlService = {
   getByPointer,
   save,
 }
 
 async function getByPointer(pointer: string) {
-  return await httpService.get(`url/${pointer}`)
+  return httpService.get<Url>(`${ENDPOINT}/${pointer}`)
 }
 
 function save(url: Url) {
-  return httpService.post('url', url)
+  return httpService.post<Url>(`${ENDPOINT}`, url)
 }

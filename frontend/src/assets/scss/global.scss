@@ -16,6 +16,7 @@
 // Pages
 
 // Components
+@import 'cmps/user-preview';
 @import 'cmps/tiny-url-app';
 @import 'cmps/app-header';
 @import 'cmps/register';
@@ -23,3 +24,18 @@
 @import 'cmps/login';
 @import 'cmps/input';
 @import 'cmps/app';
+.msg-list {
+  color: white;
+}
+
+.tiny-url-chat {
+  color: white;
+}
+
+.info {
+  color: white;
+}
+
+.room-edit {
+  color: white;
+}

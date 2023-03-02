@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { logout } from '../store/actions/authActions'
-import { useAppDispatch } from '../customHooks'
+import { logout } from '../../store/actions/authActions'
+import { useAppDispatch } from '../../customHooks'
 
 export const Logout: React.FC<{}> = () => {
   const dispatch = useAppDispatch()

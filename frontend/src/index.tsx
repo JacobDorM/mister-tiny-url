@@ -1,18 +1,23 @@
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { App } from './App'
 import reportWebVitals from './reportWebVitals'
 import { store } from './store/index'
 import { HashRouter as Router } from 'react-router-dom'
 import './assets/scss/global.scss'
 
+const queryClient = new QueryClient()
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <App />
+      </Router>
+    </QueryClientProvider>
   </Provider>
   // </React.StrictMode>
 )

@@ -1,13 +1,13 @@
-import { UserActionTypes, UserActions, UserState } from '../../models'
+import { AuthActionTypes, AuthActions, AuthState } from '../../models'
 import { authService } from '../../services/authService'
 
-const INITIAL_STATE: UserState = {
+const INITIAL_STATE: AuthState = {
   loggedinUser: authService.getLoggedinUser(),
 }
 
-export function authReducer(state = INITIAL_STATE, action: UserActions): UserState {
+export function authReducer(state = INITIAL_STATE, action: AuthActions): AuthState {
   switch (action.type) {
-    case UserActionTypes.SET_LOGGEDIN_USER:
+    case AuthActionTypes.SET_LOGGEDIN_USER:
       return {
         ...state,
         loggedinUser: action.user,

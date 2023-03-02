@@ -1,15 +1,15 @@
-import { UserActionTypes, UserActions, UserState } from '../../models'
+import { UsersActionTypes, UsersActions, UsersState } from '../../models'
 
-const INITIAL_STATE: UserState = {
-  loggedinUser: null,
+const INITIAL_STATE: UsersState = {
+  users: null,
 }
 
-export function userReducer(state = INITIAL_STATE, action: UserActions): UserState {
+export function userReducer(state = INITIAL_STATE, action: UsersActions): {} {
   switch (action.type) {
-    case UserActionTypes.SET_LOGGEDIN_USER:
+    case UsersActionTypes.SET_USERS:
       return {
         ...state,
-        loggedinUser: action.user,
+        users: action.users,
       }
 
     default:

@@ -39,6 +39,9 @@ export const Roadmap: React.FC<{}> = () => {
         </div>
         <div className="z-15">
           <div className="flex align-center bg-t-teal rounded position-relative">
+            <NavLink to="/chat" className="navigation-link rounded">
+              Chat
+            </NavLink>
             <NavLink to="/tinyurl/myurls" className="navigation-link rounded">
               My URLs
             </NavLink>
