@@ -1,6 +1,5 @@
 const express = require('express')
 const { login, signup, logout, getLoggedinUser } = require('./auth.controller')
-
 const router = express.Router()
 
 router.get('/loggedinuser', getLoggedinUser)

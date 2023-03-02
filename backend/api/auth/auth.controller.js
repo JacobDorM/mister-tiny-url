@@ -5,9 +5,9 @@ async function login(req, res) {
   const { email, password } = req.body
   try {
     const user = await authService.login(email, password)
-    const loginToken = authService.getLoginToken(user)
     logger.info('User login: ', user)
-    res.cookie('loginToken', loginToken, { sameSite: 'None', secure: true })
+    const loginToken = authService.getLoginToken(user)
+    req.session.loginToken = loginToken
     res.json(user)
   } catch (err) {
     logger.error('Failed to Login ' + err)
@@ -18,16 +18,9 @@ async function login(req, res) {
 async function signup(req, res) {
   try {
     const credentials = req.body
-    // Never log passwords
-    // logger.debug(credentials)
-    await authService.signup(credentials)
-
-    // logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
-    // const user = await authService.login(credentials.email, credentials.password)
-    // logger.info('User signup:', user)
-    // const loginToken = authService.getLoginToken(user)
-    // res.cookie('loginToken', loginToken, { sameSite: 'None', secure: true })
-    // res.json(user)
+    // Never log passwords - means don't log credentials
+    const account = await authService.signup(credentials)
+    logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
   } catch (err) {
     logger.error('Failed to signup ' + err)
     res.status(500).send({ err: 'Failed to signup' })
@@ -36,7 +29,7 @@ async function signup(req, res) {
 
 async function logout(req, res) {
   try {
-    res.clearCookie('loginToken')
+    req.session.destroy()
     res.send({ msg: 'Logged out successfully' })
   } catch (err) {
     res.status(500).send({ err: 'Failed to logout' })
@@ -45,8 +38,8 @@ async function logout(req, res) {
 
 async function getLoggedinUser(req, res) {
   try {
-    if (!req?.cookies?.loginToken) return res.status(401).send('loggedinUser does not exist')
-    const loggedinUser = authService.validateToken(req.cookies.loginToken)
+    if (!req?.session?.loginToken) return res.status(401).send('loggedinUser does not exist')
+    const loggedinUser = authService.validateToken(req.session.loginToken)
     res.json(loggedinUser)
   } catch (err) {
     res.status(500).send({ err: 'Failed to getLoggedinUser' })

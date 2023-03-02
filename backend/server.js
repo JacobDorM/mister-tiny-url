@@ -1,14 +1,21 @@
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
-const cookieParser = require('cookie-parser')
+const expressSession = require('express-session')
 
 const app = express()
 const http = require('http').createServer(app)
 
 // Express App Config
-app.use(cookieParser())
+const session = expressSession({
+  secret: 'coding is amazing',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false },
+})
 app.use(express.json())
+app.use(session)
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, 'public')))
 } else {
@@ -21,6 +28,8 @@ if (process.env.NODE_ENV === 'production') {
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const urlRoutes = require('./api/url/url.routes')
+const roomRoutes = require('./api/room/room.routes')
+const { setupSocketAPI } = require('./services/socket.service')
 
 // routes
 const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
@@ -29,6 +38,9 @@ app.all('*', setupAsyncLocalStorage)
 app.use('/api/url', urlRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/room', roomRoutes)
+setupSocketAPI(http)
+
 // Make every server-side-route to match the index.html
 // so when requesting http://localhost:3030/index.html/car/123 it will still respond with
 // our SPA (single page app) (the index.html file) and allow vue/react-router to take it from there
