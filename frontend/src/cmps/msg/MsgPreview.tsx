@@ -1,24 +1,17 @@
-import { useCallback, useEffect, useState } from 'react'
 import { Msg, UserCred } from '../../models'
 import { userService } from '../../services/userService'
+import { useQuery } from 'react-query'
 
 type MsgPreviewProps = {
   msg: Msg
 }
 
 export const MsgPreview: React.FC<MsgPreviewProps> = ({ msg }) => {
-  const [user, setUser] = useState<UserCred>()
+  const { isLoading, data: user, error } = useQuery<UserCred, { message: string; status: number }>(['user', msg.byUser], () => userService.getById(msg.byUser))
 
-  const loadUser = useCallback(async () => {
-    const user = await userService.getById(msg.byUser)
-    setUser(user)
-  }, [msg.byUser])
+  if (isLoading || !user) return <div>loading...</div>
+  if (error) return <div>Error: {error.message} of Status:{error.status}</div>
 
-  useEffect(() => {
-    loadUser()
-  }, [loadUser])
-
-  if (!user) return <div>loading...</div>
   return (
     <div className="Msg">
       {/* user msg */}
