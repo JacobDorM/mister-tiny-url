@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { AppHeader } from './cmps/AppHeader'
 import { TinyUrlApp } from './pages/TinyUrlApp'
 import { TinyUrlChat } from './pages/TinyUrlChat'
-import { ChatRoom } from './pages/ChatRoom'
+import { RoomDetails } from './pages/RoomDetails'
 import { Login } from './cmps/auth/Login'
 import { Logout } from './cmps/auth/Logout'
 import { Register } from './cmps/auth/Register'
@@ -19,7 +19,7 @@ export const App: React.FC<{}> = () => {
             <Route path="/chat" element={<TinyUrlChat />} />
             <Route path="/room/edit" element={<RoomEdit />} />
             <Route path="/room/edit/:id" element={<RoomEdit />} />
-            <Route path="/room/chat/:id" element={<ChatRoom />} />
+            <Route path="/room/chat/:id" element={<RoomDetails />} />
             <Route path="/user/chat/:id" element={<ChatUser />} />
             <Route path="/tinyurl/:id" element={<TinyUrlApp />} />
             <Route path="/tinyurl" element={<TinyUrlApp />}>

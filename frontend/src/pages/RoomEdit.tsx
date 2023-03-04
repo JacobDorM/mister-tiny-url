@@ -12,17 +12,18 @@ type useFormInputType = {
   name: string
   msgs: Msg[]
 }
+
 export const RoomEdit: React.FC<{}> = () => {
   const [roomInputAtr, room, setRoom] = useFormInput<useFormInputType>({ _id: '', name: '', msgs: [] }, () => {})
   const params = useParams<{ id: string }>()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const getRoom = async (roomId?: string) => {
+  const getRoomById = async (roomId?: string) => {
     return roomId ? await roomService.getById(roomId) : roomService.getEmptyRoom()
   }
 
-  const { isLoading, data } = useQuery(['room', params.id], () => getRoom(params.id), {
+  const { isLoading, data } = useQuery(['room', params.id], () => getRoomById(params.id), {
     enabled: Boolean(params.id),
   })
 

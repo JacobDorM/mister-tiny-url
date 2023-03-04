@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useFormInput, useAppSelector, useForm } from '../customHooks'
 import { UserCred, Msg } from '../models'
@@ -6,6 +6,7 @@ import { userService } from '../services/userService'
 import { socketService, SOCKET_EMIT_SEND_PRIVATE_MSG, SOCKET_EMIT_SET_RECIPIENT, SOCKET_EVENT_USER_CHAT_ADD_MSG, SOCKET_PRIVATE_USER_TYPING } from '../services/socketService'
 import { MsgList } from '../cmps/msg/MsgList'
 import { utilService } from '../services/utilService'
+import { useQuery } from 'react-query'
 
 export const ChatUser: React.FC<{}> = () => {
   const params = useParams()
@@ -23,31 +24,33 @@ export const ChatUser: React.FC<{}> = () => {
     bounce.current()
   })
 
-  const loadUser = useCallback(async () => {
-    const userId = params.id
-    const user = await userService.getById(userId)
-    setUser(user)
+  // const getUserById = async (userId?: string) => await userService.getById(userId)
+
+  const { isLoading, data } = useQuery(['user', params.id], async () => await userService.getById(params.id), {
+    enabled: Boolean(params.id),
+  })
+
+  useEffect(() => {
+    if (data) {
+      setUser(data)
+    }
     socketService.on(SOCKET_EVENT_USER_CHAT_ADD_MSG, (msg: Msg) => setMsgs([...msgs, msg]))
     socketService.on(SOCKET_PRIVATE_USER_TYPING, (username: string) => {
       setTypingUser(username)
     })
     bounce.current = utilService.debounce(() => socketService.emit(SOCKET_PRIVATE_USER_TYPING, null))
-  }, [params.id, msgs, setUser])
-
-  useEffect(() => {
-    loadUser()
     return () => {
       socketService.off(SOCKET_EVENT_USER_CHAT_ADD_MSG)
       socketService.off(SOCKET_PRIVATE_USER_TYPING)
     }
-  }, [loadUser])
+  }, [data, msgs, setUser])
 
   const sendMsg = () => {
     socketService.emit(SOCKET_EMIT_SEND_PRIVATE_MSG, msg)
     setMsg({ _id: utilService.makeId(), txt: '', byUser: loggedinUser?._id, toUser: user?._id })
   }
 
-  if (!user) return <div>Loading...</div>
+  if (isLoading) return <div>Loading...</div>
   return (
     <div className="chat-room">
       <MsgList msgs={[...user.msgs]} />
