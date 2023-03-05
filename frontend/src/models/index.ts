@@ -1,6 +1,6 @@
 export type { Url, UrlState, UrlActions } from './url.model'
 export type { AuthState, AuthActions } from './auth.model'
-export type { UserCred, UsersState, UsersActions } from './user.model'
+export type { UserCred, UsersState, UsersActions, User } from './user.model'
 export type { Room, RoomsState, RoomsActions } from './room.model'
 export { UrlActionTypes } from './url.model'
 export { AuthActionTypes } from './auth.model'

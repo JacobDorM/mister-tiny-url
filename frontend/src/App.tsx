@@ -7,7 +7,7 @@ import { Login } from './cmps/auth/Login'
 import { Logout } from './cmps/auth/Logout'
 import { Register } from './cmps/auth/Register'
 import { RoomEdit } from './pages/RoomEdit'
-import { ChatUser } from './pages/ChatUser'
+import { UserDetails } from './pages/UserDetails'
 
 export const App: React.FC<{}> = () => {
   return (
@@ -20,7 +20,7 @@ export const App: React.FC<{}> = () => {
             <Route path="/room/edit" element={<RoomEdit />} />
             <Route path="/room/edit/:id" element={<RoomEdit />} />
             <Route path="/room/chat/:id" element={<RoomDetails />} />
-            <Route path="/user/chat/:id" element={<ChatUser />} />
+            <Route path="/user/chat/:id" element={<UserDetails />} />
             <Route path="/tinyurl/:id" element={<TinyUrlApp />} />
             <Route path="/tinyurl" element={<TinyUrlApp />}>
               <Route path="login" element={<Login />} />

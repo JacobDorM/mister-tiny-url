@@ -1,4 +1,4 @@
-import { UserCred } from '../models'
+import { User } from '../models'
 import { httpService } from './httpService'
 
 const ENDPOINT = 'user'
@@ -9,9 +9,9 @@ export const userService = {
 }
 
 async function getUsers() {
-  return httpService.get<UserCred[]>(ENDPOINT)
+  return httpService.get<User[]>(ENDPOINT)
 }
 
 async function getById(userId?: string) {
-  return httpService.get<UserCred>(`${ENDPOINT}/${userId}`)
+  return httpService.get<User>(`${ENDPOINT}/${userId}`)
 }

@@ -1,4 +1,4 @@
-import { Msg, UserCred } from '../../models'
+import { Msg, User } from '../../models'
 import { userService } from '../../services/userService'
 import { useQuery } from 'react-query'
 
@@ -7,7 +7,7 @@ type MsgPreviewProps = {
 }
 
 export const MsgPreview: React.FC<MsgPreviewProps> = ({ msg }) => {
-  const { isLoading, data: user, error } = useQuery<UserCred, { message: string; status: number }>(['user', msg.byUser], () => userService.getById(msg.byUser))
+  const { isLoading, data: user, error } = useQuery<User, { message: string; status: number }>(['user', msg.byUser], () => userService.getById(msg.byUser))
 
   if (isLoading || !user) return <div>loading...</div>
   if (error) return <div>Error: {error.message} of Status:{error.status}</div>

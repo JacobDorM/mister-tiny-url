@@ -8,6 +8,13 @@ export interface UserCred {
   msgs: Msg[] | []
 }
 
+export interface User {
+  _id: string
+  name: string
+  email: string
+  msgs: Msg[] | []
+}
+
 export interface UsersState {
   users: null | UserCred[]
 }

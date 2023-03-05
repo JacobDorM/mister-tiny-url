@@ -6,7 +6,7 @@ import { useQuery } from 'react-query'
 export const RoomDetails: React.FC<{}> = () => {
   const params = useParams()
 
-  const { isLoading, data: room } = useQuery(['room', params.id], async () => await roomService.getById(params.id), {
+  const { isLoading, data: room } = useQuery(['room', params.id], () => roomService.getById(params.id), {
     enabled: Boolean(params.id),
     cacheTime: 0,
     staleTime: Infinity,
