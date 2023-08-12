@@ -15,6 +15,7 @@ console.log("🚀 ~ file: index.tsx:13 ~ process.env.REACT_APP_API_BASE_URL:", p
 console.log("🚀 ~ file: index.tsx:14 ~ process.env:", process.env)
 
 console.log("aasd")
+console.log("aasd")
 // Usage example:
 // import { MyErrorBoundary } from './components/errorBoundary/MyErrorBoundary'
 // import { WinstonProvider } from 'winston-react';
