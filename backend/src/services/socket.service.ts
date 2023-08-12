@@ -1,22 +1,45 @@
-const logger = require('./logger.service')
-const roomService = require('../api/room/room.service')
+import logger from './logger.service'
+import { Server } from 'http';
+import SocketIO,{ RemoteSocket, Socket,} from 'socket.io';
+import roomService from'../api/room/room.service'
+import { DisconnectReason } from 'socket.io/dist/socket';
+import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+interface Msg {
+  _id: string
+  txt: string
+  byUser: string
+}
 
-var gIo = null
+let gIo: SocketIO.Server
 
-function setupSocketAPI(http) {
+interface CustomSocket extends Socket {
+  id: string;
+  userId?: string;
+  myTopic?: string;
+  myRecipient?: string;
+}
+
+// interface CustomRemoteSocket extends RemoteSocket<DefaultEventsMap, any> {
+// brodcast: any
+// }
+
+
+
+export function setupSocketAPI(http: Server) {
   gIo = require('socket.io')(http, {
     cors: {
       origin: '*',
     },
   })
-  gIo.on('connection', (socket) => {
+
+  gIo.on('connection', (socket: CustomSocket) => {
     logger.info(`New connected socket [id: ${socket.id}]`)
     socket.userId = socket.id
-    socket.on('disconnect', (socket) => {
-      logger.info(`Socket disconnected [id: ${socket.id}]`)
+    socket.on('disconnect', (reason) => {
+      logger.info(`Socket disconnected [id: ${socket.id}], reason: ${reason}`)
     })
 
-    socket.on('chat-set-topic', (topic) => {
+    socket.on('chat-set-topic', (topic: string) => {
       if (socket.myTopic === topic) return
       if (socket.myTopic) {
         socket.leave(socket.myTopic)
@@ -26,7 +49,7 @@ function setupSocketAPI(http) {
       socket.myTopic = topic
     })
 
-    socket.on('chat-set-recipient', (recipientId) => {
+    socket.on('chat-set-recipient', (recipientId: string) => {
       if (socket.myRecipient === recipientId) return
       socket.myRecipient = recipientId
       logger.info(`Socket is get new recipient: ${socket.myRecipient} [id: ${socket.id}]`)
@@ -40,32 +63,32 @@ function setupSocketAPI(http) {
       // socket.myRecipient = recipientId
     })
 
-    socket.on('room-chat-send-msg', (msg) => {
+    socket.on('room-chat-send-msg', (msg: Msg) => {
       logger.info(`New chat msg from socket [id: ${socket.id}], emitting to topic ${socket.myTopic}`)
       // emits to all sockets:
       // gIo.emit('chat addMsg', msg)
       // emits only to sockets in the same room
-      gIo.to(socket.myTopic).emit('room-chat-add-msg', msg)
+     socket.myTopic && gIo.to(socket.myTopic).emit('room-chat-add-msg', msg)
       roomService.addMsg(socket.myTopic, msg)
     })
 
-    socket.on('user-typing', (user) => {
+    socket.on('user-typing', (user: string) => {
       console.log(`${user} is typing...`)
-      broadcast({ type: 'user-typing', data: user, room: socket.myTopic, userId: socket.userId })
+      socket.myTopic && socket.userId && broadcast({ type: 'user-typing', data: user, room: socket.myTopic, userId: socket.userId })
     })
 
-    socket.on('private-user-typing', (user) => {
+    socket.on('private-user-typing', (user: string) => {
       console.log(`${user} is typing...`)
       console.log(`socket.myRecipient: ${socket.myRecipient} `)
-      socket.to(socket.myRecipient).emit('private-user-typing', user)
+      socket.myRecipient && socket.to(socket.myRecipient).emit('private-user-typing', user)
       // emitToUser({ type: 'private-user-typing', data: user, userId: socket.myRecipient })
     })
 
-    socket.on('user-watch', (userId) => {
+    socket.on('user-watch', (userId: string) => {
       logger.info(`user-watch from socket [id: ${socket.id}], on user ${userId}`)
       socket.join('watching:' + userId)
     })
-    socket.on('set-user-socket', (userId) => {
+    socket.on('set-user-socket', (userId: string) => {
       logger.info(`Setting socket.userId = ${userId} for socket [id: ${socket.id}]`)
       socket.userId = userId
     })
@@ -76,12 +99,12 @@ function setupSocketAPI(http) {
   })
 }
 
-function emitTo({ type, data, label }) {
+function emitTo({ type, data, label }: { type: string; data: any; label: string }) {
   if (label) gIo.to('watching:' + label).emit(type, data)
   else gIo.emit(type, data)
 }
 
-async function emitToUser({ type, data, userId }) {
+async function emitToUser({ type, data, userId }: { type: string; data: any; userId: string }) {
   const socket = await _getUserSocket(userId)
 
   if (socket) {
@@ -95,9 +118,9 @@ async function emitToUser({ type, data, userId }) {
 
 // If possible, send to all sockets BUT not the current socket
 // Optionally, broadcast to a room / to all
-async function broadcast({ type, data, room = null, userId }) {
+async function broadcast({ type, data, room = null, userId }: { type: string; data: any; room: string | null; userId: string }) {
   logger.info(`Broadcasting event: ${type}`)
-  const excludedSocket = await _getUserSocket(userId)
+  const excludedSocket: any = await _getUserSocket(userId)
   if (room && excludedSocket) {
     logger.info(`Broadcast to room ${room} excluding user: ${userId}`)
     excludedSocket.broadcast.to(room).emit(type, data)
@@ -113,9 +136,9 @@ async function broadcast({ type, data, room = null, userId }) {
   }
 }
 
-async function _getUserSocket(userId) {
+async function _getUserSocket(userId: string) {
   const sockets = await _getAllSockets()
-  const socket = sockets.find((s) => s.userId === userId)
+  const socket = sockets.find((s: any) => s.userId === userId)
   return socket
 }
 async function _getAllSockets() {
@@ -124,14 +147,14 @@ async function _getAllSockets() {
   return sockets
 }
 
-async function _printSockets() {
-  const sockets = await _getAllSockets()
-  console.log(`Sockets: (count: ${sockets.length}):`)
-  sockets.forEach(_printSocket)
-}
-function _printSocket(socket) {
-  console.log(`Socket - socketId: ${socket.id} userId: ${socket.userId}`)
-}
+// async function _printSockets() {
+//   const sockets = await _getAllSockets()
+//   console.log(`Sockets: (count: ${sockets.length}):`)
+//   sockets.forEach(socket =>_printSocket(socket))
+// }
+// function _printSocket(socket: Socket) {
+//   console.log(`Socket - socketId: ${socket.id} userId: ${socket.userId}`)
+// }
 
 module.exports = {
   // set up the sockets service and define the API

@@ -15,6 +15,7 @@
     "@types/react-dom": "latest",
     "@types/react-query": "latest",
     "axios": "latest",
+    "path": "^0.12.7",
     "react": "latest",
     "react-dom": "latest",
     "react-ga4": "^2.1.0",
@@ -33,15 +34,14 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start1": "set NODE_ENV=development && npm start",
+    "start-local": ".env.development.local && npm start",
+    "start:staging": "env-cmd -f './env.staging'",
+    "start-production": "copy .env.production.local .env.local && npm start",
+    "start-test": "copy .env.test.local .env.local && npm start",
     "build": "react-scripts build",
     "deploy-staging": "npm run build && cp .env.staging .env && now",
     "deploy-production": "npm run build && cp .env.production .env && now",
     "deploy-ci": "npm run build && cp .env.production .env && now",
-    "start-local": ".env.development.local && npm start",
-    "start-staging": "set NODE_ENV=staging && npm start",
-    "start-production": "copy .env.production.local .env.local && npm start",
-    "start-test": "copy .env.test.local .env.local && npm start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --release javascript-react@0.1.0 ./build/static/js && sentry-cli releases files javascript-react@0.1.0 upload-sourcemaps --release javascript-react@0.1.0 --dist 0.1.0 ./build/static/js --url-prefix ~/static/js",
@@ -69,6 +69,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/redux-mock-store": "latest",
+    "env-cmd": "^10.1.0",
     "redux-mock-store": "latest"
   }
 }

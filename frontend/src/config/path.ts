@@ -1,6 +1,7 @@
-import path from 'path'
+// import path from 'path'
 
-module.exports = {
-  dotenv: path.resolve(__dirname, '../../env/'),
+// module.exports = {
+//   dotenv: path.resolve(__dirname, '../../env'),
   // ... other paths
-}
+// }
+

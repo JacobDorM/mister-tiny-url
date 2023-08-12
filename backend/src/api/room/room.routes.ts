@@ -1,7 +1,7 @@
-const express = require('express')
-const { requireAuth } = require('../../middlewares/requireAuth.middleware')
-const { getRoom, getRooms, deleteRoom, updateRoom, addRoom } = require('./room.controller')
-const { log } = require('../../middlewares/logger.middleware')
+import express from 'express'
+import  { requireAuth } from '../../middlewares/requireAuth.middleware'
+import  { getRoom, getRooms, deleteRoom, updateRoom, addRoom } from './room.controller'
+import { log } from '../../middlewares/logger.middleware'
 const router = express.Router()
 
 // middleware that is specific to this router
@@ -13,4 +13,4 @@ router.put('/', log, requireAuth, updateRoom)
 router.post('/', log, requireAuth, addRoom)
 router.delete('/:id', log, requireAuth, deleteRoom)
 
-module.exports = router
+export default router
