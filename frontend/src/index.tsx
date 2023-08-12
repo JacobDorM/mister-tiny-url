@@ -9,9 +9,11 @@ import './assets/scss/global.scss'
 import { ErrorBoundary } from '@sentry/react'
 import SentryService from './services/tracking/ErrorService';
 import { config } from './config/config';
+// import './config/path'
 console.log("🚀 ~ file: index.tsx:12 ~ config:", config)
 console.log("🚀 ~ file: index.tsx:13 ~ process.env.REACT_APP_API_BASE_URL:", process.env.REACT_APP_API_BASE_URL)
 console.log("🚀 ~ file: index.tsx:14 ~ process.env:", process.env)
+
 
 // Usage example:
 // import { MyErrorBoundary } from './components/errorBoundary/MyErrorBoundary'
