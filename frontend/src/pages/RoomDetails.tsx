@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { roomService } from '../services/roomService'
-import { RoomChat } from '../cmps/room/RoomChat'
+import { RoomChat } from '../components/room/RoomChat'
 import { useQuery } from 'react-query'
 
 export const RoomDetails: React.FC<{}> = () => {

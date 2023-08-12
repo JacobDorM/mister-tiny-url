@@ -1,14 +1,18 @@
 import { Dispatch } from 'redux'
 import { RootState } from '..'
-import { Room } from '../../models'
+import { Room } from '../../types'
 import { roomService } from '../../services/roomService'
 
 export function loadRooms() {
   return async (dispatch: Dispatch) => {
     try {
+      dispatch({ type: 'SET_ROOMS_LOADING', isLoading: true })
       const rooms = await roomService.getRooms()
       dispatch({ type: 'SET_ROOMS', rooms })
-    } catch (err) {
+      dispatch({ type: 'SET_ROOMS_LOADING', isLoading: false })
+    } catch (err: any) {
+      dispatch({ type: 'LOAD_ROOMS_FAILURE', error: err.message })
+      // Todo: change to loggerService
       console.log('err:', err)
     }
   }

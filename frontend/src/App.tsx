@@ -1,14 +1,15 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { AppHeader } from './cmps/AppHeader'
+import { AppHeader } from './components/appHeader/AppHeader'
 import { TinyUrlApp } from './pages/TinyUrlApp'
 import { TinyUrlChat } from './pages/TinyUrlChat'
 import { RoomDetails } from './pages/RoomDetails'
-import { Login } from './cmps/auth/Login'
-import { Logout } from './cmps/auth/Logout'
-import { Register } from './cmps/auth/Register'
+import { Login } from './components/auth/Login'
+import { Logout } from './components/auth/Logout'
+import { Register } from './components/auth/Register'
 import { RoomEdit } from './pages/RoomEdit'
 import { UserDetails } from './pages/UserDetails'
-
+// import { withProfiler } from '@sentry/react'
+// withProfiler()
 export const App: React.FC<{}> = () => {
   return (
     <div>

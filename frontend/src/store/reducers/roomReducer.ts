@@ -1,7 +1,9 @@
-import { RoomsActionTypes, RoomsActions, RoomsState } from '../../models'
+import { RoomsActionTypes, RoomsActions, RoomsState } from '../../types'
 
 const INITIAL_STATE: RoomsState = {
   rooms: [],
+  isLoading: false,
+  error: '',
 }
 
 export function roomReducer(state = INITIAL_STATE, action: RoomsActions): RoomsState {
@@ -10,6 +12,18 @@ export function roomReducer(state = INITIAL_STATE, action: RoomsActions): RoomsS
       return {
         ...state,
         rooms: action.rooms,
+      }
+
+    case RoomsActionTypes.SET_ROOMS_LOADING:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      }
+
+    case RoomsActionTypes.SET_ROOMS_FAILURE:
+      return {
+        ...state,
+        error: action.error,
       }
 
     case RoomsActionTypes.ADD_ROOM:

@@ -1,4 +1,4 @@
-import { AuthActionTypes, AuthActions, AuthState } from '../../models'
+import { AuthActionTypes, AuthActions, AuthState } from '../../types'
 import { authService } from '../../services/authService'
 
 const INITIAL_STATE: AuthState = {

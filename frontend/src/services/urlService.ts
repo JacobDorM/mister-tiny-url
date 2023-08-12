@@ -1,8 +1,8 @@
-import { httpService } from './httpService'
-import { Url } from '../models/url.model'
+import { HttpService } from './httpServiceClass'
+import { Url } from '../types/urlType'
 
 const ENDPOINT = 'url'
-
+const httpService = new HttpService()
 export const urlService = {
   getByPointer,
   save,

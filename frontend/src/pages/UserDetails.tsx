@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { userService } from '../services/userService'
-import { UserChat } from '../cmps/user/UserChat'
+import { UserChat } from '../components/user/UserChat'
 import { useQuery } from 'react-query'
 
 export const UserDetails: React.FC<{}> = () => {

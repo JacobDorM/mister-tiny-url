@@ -1,8 +1,8 @@
-import { Room } from '../models'
-import { httpService } from './httpService'
+import { Room } from '../types'
+import { HttpService } from './httpServiceClass'
 
 const ENDPOINT = 'room'
-
+const httpService = new HttpService()
 export const roomService = {
   getRooms,
   getById,

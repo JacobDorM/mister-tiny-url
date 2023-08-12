@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { urlService } from '../../services/urlService'
-import { Url } from '../../models'
+import { Url, UrlActionTypes } from '../../types'
 
 export function loadUrl(urlPointer: string) {
   return async (dispatch: Dispatch) => {
@@ -16,18 +16,20 @@ export function loadUrl(urlPointer: string) {
 export function setUrl(url: Url | null) {
   return async (dispatch: Dispatch) => {
     try {
-      dispatch({ type: 'SET_URL', url })
+      dispatch({ type: UrlActionTypes.SET_URL, url })
     } catch (err) {
       console.log('err:', err)
     }
   }
 }
 
-export function saveUrl(url: Url) {
+export function saveUrl(url: Url | null) {
   return async (dispatch: Dispatch) => {
     try {
-      url = await urlService.save({ ...url })
-      dispatch({ type: 'SET_URL', url })
+      if (url) {
+        url = await urlService.save({ ...url })
+        dispatch({ type: 'SET_URL', url })
+      }
     } catch (err) {
       console.log('err:', err)
     }

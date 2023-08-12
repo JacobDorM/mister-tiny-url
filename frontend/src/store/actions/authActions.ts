@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { UserCred } from '../../models'
+import { UserCred } from '../../types'
 import { authService } from '../../services/authService'
 
 export function signup(userCred: UserCred) {

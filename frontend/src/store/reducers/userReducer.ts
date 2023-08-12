@@ -1,4 +1,4 @@
-import { UsersActionTypes, UsersActions, UsersState } from '../../models'
+import { UsersActionTypes, UsersActions, UsersState } from '../../types'
 
 const INITIAL_STATE: UsersState = {
   users: null,

@@ -1,4 +1,4 @@
-import { User } from '../models'
+import { User } from '../types'
 import { httpService } from './httpService'
 
 const ENDPOINT = 'user'

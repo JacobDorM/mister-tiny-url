@@ -1,4 +1,4 @@
-import { UserCred } from '../models'
+import { UserCred } from '../types'
 import { httpService } from './httpService'
 import { socketService } from './socketService'
 

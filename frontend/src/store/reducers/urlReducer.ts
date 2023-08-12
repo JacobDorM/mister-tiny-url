@@ -1,5 +1,5 @@
 // what type should you give to null
-import { UrlState, UrlActions, UrlActionTypes } from '../../models'
+import { UrlState, UrlActions, UrlActionTypes } from '../../types'
 
 const INITIAL_STATE: UrlState = {
   url: null,

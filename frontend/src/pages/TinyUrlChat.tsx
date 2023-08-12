@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { RoomApp } from '../cmps/room/RoomApp'
-import { UserApp } from '../cmps/user/UserApp'
+import { RoomApp } from '../components/room/RoomApp'
+import { UserApp } from '../components/user/UserApp'
 
 export const TinyUrlChat: React.FC<{}> = () => {
   return (
