@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useFormInput, useAppSelector } from '../../hooks'
 import { Msg } from '../../types'
-import { socketService, SOCKET_EMIT_SEND_PRIVATE_MSG, SOCKET_EMIT_SET_RECIPIENT, SOCKET_EVENT_USER_CHAT_ADD_MSG, SOCKET_PRIVATE_USER_TYPING } from '../../services/socketService'
+import { socketService, SOCKET_PRIVATE_USER_TYPING } from '../../services/socketServiceClass'
 import { MsgList } from '../msg/MsgList'
 import { utilService } from '../../services/utilService'
+import { SOCKET_EMIT_SEND_PRIVATE_MSG, SOCKET_EMIT_SET_RECIPIENT } from '../../constants/socket/emit'
+import { SOCKET_EVENT_USER_CHAT_ADD_MSG } from '../../constants/socket/event'
 
 interface UserChatProps {
   userId: string

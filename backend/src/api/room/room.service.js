@@ -92,6 +92,7 @@ async function add(room) {
 }
 
 async function addMsg(roomId, msg) {
+  logger.info(`New addMsg for socket [roomId: ${roomId}], msg ${msg}`)
   const room = await getById(roomId)
   room.msgs = room.msgs || []
   room.msgs.push(msg)

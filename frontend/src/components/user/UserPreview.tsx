@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import { UserCred } from '../../types'
+import { config } from '../../config/config'
 type UserPreviewProps = {
   user: UserCred
 }
 
 export const UserPreview: React.FC<UserPreviewProps> = ({ user }) => {
-  const userStyle = { backgroundImage: `url(https://robohash.org/${user._id})` }
+  const userStyle = { backgroundImage: `url(${config.robohash.baseUrl}${user._id})` }
   return (
     <div style={userStyle} className="user-preview">
       <Link to={`/user/chat/${user._id}`} className="info">

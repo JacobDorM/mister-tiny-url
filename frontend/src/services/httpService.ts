@@ -1,58 +1,118 @@
-import Axios, { AxiosRequestConfig } from 'axios'
-// import { router } from '@/router'
+import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { config } from '../config/config'
 
-const BASE_URL = process.env.NODE_ENV === 'production' ? '/api/' : '//localhost:3030/api/'
-
-const axiosConfig: Readonly<AxiosRequestConfig> = {
-  baseURL: BASE_URL,
-  withCredentials: true,
-}
-const axios = Axios.create(axiosConfig)
-
-interface HttpService {
-  get<T>(endpoint: string, data?: Record<string, any>): Promise<T>
-  post<T>(endpoint: string, data?: Record<string, any>): Promise<T>
-  put<T>(endpoint: string, data?: Record<string, any>): Promise<T>
-  delete<T>(endpoint: string, data?: Record<string, any>): Promise<T>
+interface RequestConfig extends AxiosRequestConfig {
+  // Define any additional properties specific to your app, if needed
+  method?: string
+  url?: string
+  data?: any
 }
 
-export const httpService: HttpService = {
-  get(endpoint, data) {
-    return ajax(endpoint, 'GET', data)
-  },
-  post(endpoint, data) {
-    return ajax(endpoint, 'POST', data)
-  },
-  put(endpoint, data) {
-    return ajax(endpoint, 'PUT', data)
-  },
-  delete(endpoint, data) {
-    return ajax(endpoint, 'DELETE', data)
-  },
-}
+export class HttpService {
+  private axiosInstance: AxiosInstance
 
-async function ajax<T>(endpoint: string, method = 'GET', data: Record<string, unknown> | null = null): Promise<T> {
-  try {
-    const res = await axios({
-      url: endpoint,
-      method,
-      data,
-      params: method === 'GET' ? data : null,
-    })
-    return res.data
-  } catch (err) {
-    if (err instanceof Error) {
-      console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data:`, data)
-      console.log(err)
-      if (err.name && err.response.status === 401) {
-        // Depends on routing startegy - hash or history
-        // window.location.assign('/#/login')
-        // window.location.assign('/login')
-        // router.push('/login')
-      }
-    } else {
-      console.log('Unexpected error', err)
+  constructor(baseURL: string = config.backendBaseUrl) {
+    const axiosConfig: AxiosRequestConfig = {
+      baseURL,
+      withCredentials: true,
     }
-    throw err
+    this.axiosInstance = Axios.create(axiosConfig)
+  }
+
+  private async request<T>(
+    endpoint: string = '',
+    method: string,
+    data: Record<string, unknown> | null = null
+  ): Promise<T> {
+    try {
+      const response: AxiosResponse<T> = await this.axiosInstance.request({
+        url: endpoint,
+        method,
+        data,
+        params: method === 'GET' ? data : null,
+      })
+      return response.data
+    } catch (err) {
+      this.handleRequestError(err as AxiosError)
+      throw err
+    }
+  }
+
+  private handleRequestError(error: AxiosError): void {
+    if (error.isAxiosError) {
+      const { config = {} as RequestConfig, response } = error
+      const { method, url, data }: RequestConfig = config
+      console.log(`Had Issues ${method}ing to the backend, endpoint: ${url}, with data:`, data)
+      console.log(error)
+      if (response) {
+        const { status, data }: AxiosResponse = response
+
+        switch (status) {
+          case 200:
+            // Handle successful response data, if needed
+            break
+          case 201:
+            // Handle resource created, e.g., show a success message or navigate to the new resource
+            break
+          case 204:
+            // Handle successful request with no content, e.g., refresh page or show success message
+            break
+          case 400:
+            // Handle bad request, e.g., show an error message to the user and guide them to fix the issue
+            break
+          case 401:
+            console.log('data', data)
+            // Handle unauthorized error, e.g., redirect to the login page
+            // window.location.assign('/login');
+            // Depends on routing startegy - hash or history
+            // window.location.assign('/#/login')
+            // window.location.assign('/login')
+            // router.push('/login')
+            break
+          case 403:
+            // Handle forbidden error, e.g., show a message indicating lack of permissions
+            break
+          case 404:
+            // Handle not found error, e.g., show a friendly error message to the user
+            // Todo: add toast this page does not exist.
+            break
+          case 409:
+            // Handle conflict error, e.g., show a message indicating a conflict with the current state of the resource
+            break
+          case 429:
+            // Handle too many requests error, e.g., show a message indicating rate-limiting or ask the user to slow down
+            break
+          case 500:
+            // Handle internal server error, e.g., show a "something went wrong" message
+            // Todo: add toast something went wrong.
+            break
+          case 503:
+            // Handle service unavailable error, e.g., show a message indicating unavailability and suggest trying again later
+            break
+          // Add more cases as needed for other status codes
+          default:
+            // Handle any other status code not explicitly handled
+            break
+        }
+      } else {
+        console.log('Unexpected error', error)
+      }
+    }
+  }
+
+  public get<T>(endpoint: string, data?: Record<string, any>): Promise<T> {
+    return this.request<T>(endpoint, 'GET', data)
+  }
+
+  public post<T>(endpoint: string, data?: Record<string, any>): Promise<T> {
+    return this.request<T>(endpoint, 'POST', data)
+  }
+
+  public put<T>(endpoint: string, data?: Record<string, any>): Promise<T> {
+    return this.request<T>(endpoint, 'PUT', data)
+  }
+
+  public delete<T>(endpoint: string, data?: Record<string, any>): Promise<T> {
+    return this.request<T>(endpoint, 'DELETE', data)
   }
 }

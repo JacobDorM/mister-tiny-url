@@ -1,8 +1,8 @@
 import { User } from '../types'
-import { httpService } from './httpService'
+import { HttpService } from './httpService'
 
 const ENDPOINT = 'user'
-
+const httpService = new HttpService()
 export const userService = {
   getUsers,
   getById,

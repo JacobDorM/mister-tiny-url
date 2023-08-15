@@ -1,5 +1,6 @@
 // Define the LogLevel enum separately
-import { HttpService } from './httpServiceClass'
+import { config } from '../../config/config'
+import { HttpService } from '../httpService'
 // import axios from 'axios'
 export enum LogLevel {
   TRACE = 'trace',
@@ -16,8 +17,8 @@ export class LoggerService {
   private static instance: LoggerService
   private logLevel: LogLevel
   private logHandler: LogHandler | null = null
-  private logstashUrl: string = 'http://localhost:5044'
-  private httpService = new HttpService('http://localhost:5044')
+  private logstashUrl: string = config.logstash.baseUrl
+  private httpService = new HttpService(config.logstash.baseUrl)
 
   private constructor(logLevel: LogLevel) {
     this.logLevel = logLevel

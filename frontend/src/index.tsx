@@ -7,15 +7,9 @@ import { store } from './store/index'
 import { HashRouter as Router } from 'react-router-dom'
 import './assets/scss/global.scss'
 import { ErrorBoundary } from '@sentry/react'
-import SentryService from './services/tracking/ErrorService';
+import SentryService from './services/tracking/sentryErrorService';
 import { config } from './config/config';
-// import './config/path'
-console.log("🚀 ~ file: index.tsx:12 ~ config:", config)
-console.log("🚀 ~ file: index.tsx:13 ~ process.env.REACT_APP_API_BASE_URL:", process.env.REACT_APP_API_BASE_URL)
-console.log("🚀 ~ file: index.tsx:14 ~ process.env:", process.env)
 
-console.log("aasd")
-console.log("aasd")
 // Usage example:
 // import { MyErrorBoundary } from './components/errorBoundary/MyErrorBoundary'
 // import { WinstonProvider } from 'winston-react';

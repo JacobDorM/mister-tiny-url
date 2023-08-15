@@ -1,4 +1,4 @@
-import { HttpService } from './httpServiceClass'
+import { HttpService } from './httpService'
 import { Url } from '../types/urlType'
 
 const ENDPOINT = 'url'

@@ -1,5 +1,5 @@
 import { Room } from '../types'
-import { HttpService } from './httpServiceClass'
+import { HttpService } from './httpService'
 
 const ENDPOINT = 'room'
 const httpService = new HttpService()

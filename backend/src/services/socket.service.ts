@@ -1,9 +1,8 @@
 import logger from './logger.service'
 import { Server } from 'http';
-import SocketIO,{ RemoteSocket, Socket,} from 'socket.io';
+import SocketIO,{ Socket,} from 'socket.io';
 import roomService from'../api/room/room.service'
-import { DisconnectReason } from 'socket.io/dist/socket';
-import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+
 interface Msg {
   _id: string
   txt: string

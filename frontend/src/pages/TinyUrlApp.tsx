@@ -52,7 +52,6 @@ export const TinyUrlApp: React.FC<{}> = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (url) {
-      console.log("🚀 ~ file: TinyUrlApp.tsx:52 ~ onSubmit ~ url:", url)
       setLocalUrl({ aaa: { longUrl: '' } })
       dispatch(setUrl(null))
     } else !utilService.isValidHttpUrl(localUrl.aaa.longUrl) ? console.log('Invalid URl') : dispatch(saveUrl({ longUrl: localUrl.aaa.longUrl }))

@@ -1,9 +1,10 @@
 import { UserCred } from '../types'
-import { httpService } from './httpService'
-import { socketService } from './socketService'
+import { HttpService } from './httpService'
+import { socketService } from './socketServiceClass'
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
 const ENDPOINT = 'auth'
+const httpService = new HttpService()
 
 export const authService = {
   getLoggedinUser,

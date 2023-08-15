@@ -2,8 +2,9 @@ import { useEffect, useCallback } from 'react'
 import { RoomList } from './roomList/RoomList'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import { loadRooms, removeRoom, saveRoom } from '../../store/actions/roomActions'
-import { socketService, SOCKET_EVENT_DELETE_ROOM, SOCKET_EVENT_SAVE_ROOM } from '../../services/socketService'
+import { socketService } from '../../services/socketServiceClass'
 import { Room } from '../../types'
+import { SOCKET_EVENT_DELETE_ROOM, SOCKET_EVENT_SAVE_ROOM } from '../../constants/socket/event'
 
 export const RoomApp: React.FC<{}> = () => {
   let { rooms, isLoading, error } = useAppSelector((state) => state.roomModule)

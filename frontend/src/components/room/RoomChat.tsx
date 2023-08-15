@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useFormInput, useAppSelector } from '../../hooks'
 import { Msg } from '../../types'
-import { socketService, SOCKET_EMIT_ROOM_CHAT_SEND_MSG, SOCKET_EMIT_SET_TOPIC, SOCKET_EVENT_ROOM_CHAT_ADD_MSG, SOCKET_USER_TYPING } from '../../services/socketService'
+import { socketService, SOCKET_USER_TYPING } from '../../services/socketServiceClass'
 import { MsgList } from '../../components/msg/MsgList'
 import { utilService } from '../../services/utilService'
+import { SOCKET_EMIT_ROOM_CHAT_SEND_MSG, SOCKET_EMIT_SET_TOPIC } from '../../constants/socket/emit'
+import { SOCKET_EVENT_ROOM_CHAT_ADD_MSG } from '../../constants/socket/event'
 
 interface RoomChatProps {
   roomId: string
